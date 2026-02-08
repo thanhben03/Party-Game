@@ -159,13 +159,13 @@ namespace StarterAssets
         {
             _hasAnimator = TryGetComponent(out _animator);
             Debug.Log(playerKnockback.IsKnockback);
-            if (playerKnockback.IsKnockback)
-            {
-                _speed = 0f;
-                _animationBlend = 0f;
-                _verticalVelocity = 0f;
-                return;
-            }
+            //if (playerKnockback.IsKnockback)
+            //{
+            //    _speed = 0f;
+            //    _animationBlend = 0f;
+            //    _verticalVelocity = 0f;
+            //    return;
+            //}
 
             JumpAndGravity();
             GroundedCheck();
@@ -224,8 +224,18 @@ namespace StarterAssets
 
         private void Move()
         {
-            if (playerKnockback.IsKnockback) return;
-            Debug.Log("Move");
+            if (playerKnockback != null && !playerKnockback.CanControlMovement)
+            {
+                // Reset animation về 0 để không chạy
+                if (_hasAnimator)
+                {
+                    _animator.SetFloat(_animIDSpeed, 0f);
+                    _animator.SetFloat(_animIDMotionSpeed, 0f);
+                }
+                return;
+            }
+            //if (playerKnockback.IsKnockback) return;
+            //Debug.Log("Move");
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -294,6 +304,10 @@ namespace StarterAssets
 
         private void JumpAndGravity()
         {
+            if (playerKnockback != null && playerKnockback.IsKnockback)
+            {
+                _input.jump = false;
+            }
             if (Grounded)
             {
                 // reset the fall timeout timer
@@ -361,6 +375,12 @@ namespace StarterAssets
             }
         }
 
+        public void SetVerticalVelocity(float v)
+        {
+            _verticalVelocity = v;
+        }
+
+
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
         {
             if (lfAngle < -360f) lfAngle += 360f;
@@ -402,4 +422,6 @@ namespace StarterAssets
             }
         }
     }
+
+
 }

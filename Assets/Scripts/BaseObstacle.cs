@@ -56,27 +56,7 @@ public abstract class BaseObstacle : MonoBehaviour
         PlayerKnockback knock = other.GetComponent<PlayerKnockback>();
         if (knock != null)
         {
-            knock.KnockbackFrom(transform.position);
+            knock.Knockback(transform.position);
         }
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        //if (!collision.collider.CompareTag("Player")) return;
-        //Debug.Log("Collided with Player");
-        //Rigidbody rb = collision.collider.GetComponent<Rigidbody>();
-        //Animator anim = collision.collider.GetComponentInChildren<Animator>();
-        //float pushForce = 8f;
-        //if (rb != null)
-        //{
-        //    Vector3 dir = (collision.transform.position - transform.position).normalized;
-        //    dir.y = 0f;
-
-        //    rb.AddForce(dir * pushForce, ForceMode.Impulse);
-        //}
-
-        //if (anim != null)
-        //{
-        //    anim.SetTrigger(fallTriggerName);
-        //}
     }
 }
