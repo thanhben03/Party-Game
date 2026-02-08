@@ -110,6 +110,8 @@ namespace StarterAssets
 
         private bool _hasAnimator;
 
+        private PlayerKnockback playerKnockback;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -150,11 +152,20 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            playerKnockback = GetComponent<PlayerKnockback>();
         }
 
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
+            Debug.Log(playerKnockback.IsKnockback);
+            if (playerKnockback.IsKnockback)
+            {
+                _speed = 0f;
+                _animationBlend = 0f;
+                _verticalVelocity = 0f;
+                return;
+            }
 
             JumpAndGravity();
             GroundedCheck();
@@ -213,6 +224,8 @@ namespace StarterAssets
 
         private void Move()
         {
+            if (playerKnockback.IsKnockback) return;
+            Debug.Log("Move");
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 

@@ -27,4 +27,56 @@ public abstract class BaseObstacle : MonoBehaviour
     {
         return 1f;
     }
+
+    //private void OnCol(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        Rigidbody rb = other.GetComponent<Rigidbody>();
+    //        Animator anim = other.GetComponentInChildren<Animator>();
+    //        float pushForce = 8f;
+    //        if (rb != null)
+    //        {
+    //            Vector3 dir = (other.transform.position - transform.position).normalized;
+    //            dir.y = 0f;
+
+    //            rb.AddForce(dir * pushForce, ForceMode.Impulse);
+    //        }
+
+    //        //if (anim != null)
+    //        //{
+    //        //    anim.SetTrigger(fallTriggerName);
+    //        //}
+    //    }
+    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Player")) return;
+
+        PlayerKnockback knock = other.GetComponent<PlayerKnockback>();
+        if (knock != null)
+        {
+            knock.KnockbackFrom(transform.position);
+        }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        //if (!collision.collider.CompareTag("Player")) return;
+        //Debug.Log("Collided with Player");
+        //Rigidbody rb = collision.collider.GetComponent<Rigidbody>();
+        //Animator anim = collision.collider.GetComponentInChildren<Animator>();
+        //float pushForce = 8f;
+        //if (rb != null)
+        //{
+        //    Vector3 dir = (collision.transform.position - transform.position).normalized;
+        //    dir.y = 0f;
+
+        //    rb.AddForce(dir * pushForce, ForceMode.Impulse);
+        //}
+
+        //if (anim != null)
+        //{
+        //    anim.SetTrigger(fallTriggerName);
+        //}
+    }
 }
