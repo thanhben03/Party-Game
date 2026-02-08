@@ -18,6 +18,13 @@ public abstract class BaseObstacle : MonoBehaviour
     }
 
 
-    protected abstract Vector3 GetRotateAxis();
-    protected abstract float GetRollDir();
+    protected virtual Vector3 GetRotateAxis()
+    {
+        return Vector3.zero;
+    }
+
+    protected virtual float GetRollDir()
+    {
+        return 1f;
+    }
 }
