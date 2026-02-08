@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class MoveYEaseInOut : MonoBehaviour
+public class LiftPlatform : MonoBehaviour
 {
     [Header("Move Settings")]
     public float moveDistance = 2f;
